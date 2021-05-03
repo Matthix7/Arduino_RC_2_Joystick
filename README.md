@@ -1,5 +1,6 @@
 # Arduino_RC_2_Joystick
-With an Arduino, makes possible to use a RC remote for video games and simulators.
+With an Arduino, makes possible to use a RC remote for video games and simulators.  
+Suitable for RC receiver with PWM output.
 
 ## Dependencies
  - https://code.google.com/archive/p/unojoy/wikis/GettingStarted.wiki
