@@ -2,10 +2,12 @@
 #include "UnoJoy.h"
 
 
-#define RC_CHANS 2
+#define RC_CHANS 4
 enum {
-  STEERING,
-  THROTTLE
+  ROLL,
+  PITCH,
+  THROTTLE,
+  YAW
 };
 
 
@@ -13,23 +15,24 @@ enum {
 //////////////////  TO BE COMPLETED FOR EACH CHANNEL  /////////////////////////////////////////////////////////
 
 // int connection_pin, uint16_t pwm_cycle_duration_us, float min_ratio, float max_ratio;
-ChannelCharacteristics steering_channel = {6, 18500, 0.059, 0.101};
-ChannelCharacteristics throttle_channel = {7, 18500, 0.049, 0.111};
+ChannelCharacteristics roll_channel = {5, 16500, 0.07, 0.12};
+ChannelCharacteristics pitch_channel = {6, 16500, 0.06, 0.11};
+ChannelCharacteristics throttle_channel = {7, 16500, 0.07, 0.12};
+ChannelCharacteristics yaw_channel = {8, 16500, 0.07, 0.12};
 
 // Put all characteristics arrays above in the array below
-ChannelCharacteristics channels_data[RC_CHANS] = {steering_channel, throttle_channel};
+ChannelCharacteristics channels_data[RC_CHANS] = {roll_channel, pitch_channel, throttle_channel, yaw_channel};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Channel* rc_channels[RC_CHANS];
-volatile uint16_t rc_value[RC_CHANS] = {8, 8};
+volatile uint16_t rc_value[RC_CHANS] = {8, 8, 8, 8};
 
 
 
 
 void setup() {
-//  Serial.begin(115200); 
   setupUnoJoy();
 
   for (int i=0; i<RC_CHANS; i++){
@@ -107,18 +110,11 @@ dataForController_t getControllerData(void){
 //  controllerData.homeOn = !digitalRead(A5);
   
   // Set the analog sticks
-  //  Since analogRead(pin) returns a 10 bit value,
-  //  we need to perform a bit shift operation to
-  //  lose the 2 least significant bits and get an
-  //  8 bit number that we can use  
-//  controllerData.leftStickX = analogRead(A0) >> 2;
-//  controllerData.leftStickY = analogRead(A1) >> 2;
-//  controllerData.rightStickX = analogRead(A2) >> 2;
-//  controllerData.rightStickY = analogRead(A3) >> 2;
-//  controllerData.leftStickX = analogRead(A0) >> 2;
   controllerData.leftStickY = rc_value[THROTTLE];
-  controllerData.rightStickX = 255 - rc_value[STEERING];
-//  controllerData.rightStickY = analogRead(A3) >> 2;
+  controllerData.leftStickX = rc_value[YAW];
+  controllerData.rightStickX = rc_value[ROLL];
+  controllerData.rightStickY = rc_value[PITCH];
+
   // And return the data!
   return controllerData;
 }

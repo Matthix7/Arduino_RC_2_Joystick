@@ -5,25 +5,29 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////  TO BE COMPLETED FOR EACH CHANNEL  /////////////////////////////////////////////////////////
 
-#define RC_CHANS 2
+#define RC_CHANS 4
 enum {
-  STEERING,
-  THROTTLE
+  ROLL,
+  PITCH,
+  THROTTLE,
+  YAW
 };
 
 // int connection_pin, uint16_t pwm_cycle_duration_us, float min_ratio, float max_ratio;
 // For this program, only connection pins matters. Leave the rest unchanged.
-ChannelCharacteristics steering_channel = {6, 950, 0.06, 0.1};
-ChannelCharacteristics throttle_channel = {7, 950, 0.05, 0.11};
+ChannelCharacteristics roll_channel = {5, 18500, 0.059, 0.101};
+ChannelCharacteristics pitch_channel = {6, 18500, 0.059, 0.101};
+ChannelCharacteristics throttle_channel = {7, 18500, 0.049, 0.111};
+ChannelCharacteristics yaw_channel = {8, 18500, 0.049, 0.111};
 
 // Put all characteristics arrays above in the array below
-ChannelCharacteristics channels_data[RC_CHANS] = {steering_channel, throttle_channel};
+ChannelCharacteristics channels_data[RC_CHANS] = {roll_channel, pitch_channel, throttle_channel, yaw_channel};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Channel* rc_channels[RC_CHANS];
-volatile uint16_t rc_value[RC_CHANS] = {8, 8};
+volatile uint16_t rc_value[RC_CHANS] = {8, 8, 8, 8};
 
 
 

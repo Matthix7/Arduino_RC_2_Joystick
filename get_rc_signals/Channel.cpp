@@ -7,6 +7,8 @@ Channel::Channel(int id,
   this->pwm_cycle_duration_us = characteristics.pwm_cycle_duration_us;
   this->min_ratio = characteristics.min_ratio;
   this->max_ratio = characteristics.max_ratio; 
+  Serial.print("Channel ");
+  Serial.println(this->id);
 }
 
 
